@@ -5,7 +5,21 @@ import org.scalatest._
 class LineTest extends FeatureSpec with GivenWhenThen
 {
     info("A line should work as required")
-    
+
+    feature("Construction")
+    {
+        scenario("A line of length zero shouldn't be allowed")
+        {
+            Given("A length of zero")
+            val length = 0
+
+            Then("Constructing a Line should result in an error")
+            intercept[InvalidLineException] {
+                Line(length, Seq())
+            }
+        }
+    }
+
     feature("Completeness")
     {
         scenario("Validation fails if a line is incorrectly shaded")
@@ -42,6 +56,33 @@ class LineTest extends FeatureSpec with GivenWhenThen
 
             And("Completeness should fail")
             assert(line.complete())
+        }
+    }
+
+    feature("Shading")
+    {
+        scenario("Shading a blank square should result in it being shaded")
+        {
+            Given("A line with no shading")
+            var line = Line(3, Seq(1))
+
+            When("Shading a square")
+            line = line.shade(1)
+
+            Then("The square should be shaded")
+            assert(line.shaded == Seq(1))
+        }
+
+        scenario("Shading a shaded square should have no effect")
+        {
+            Given("A line with square 1 shaded")
+            var line = new Line(3, Seq(1), Seq(1))
+
+            When("Shading square 1")
+            val newLine = line.shade(1)
+
+            Then("No change should result")
+            assert(line == newLine)
         }
     }
 }

@@ -18,6 +18,9 @@ class Grid protected [gridshading] (
     protected [gridshading] val rowCount = rowHints.length
 
     if ( rowCount == 0 || columnCount == 0 ) throw new InvalidGridException("Invalid grid: must have at least one row and column")
+
+    protected [gridshading] val rows = rowHints.map(hints => Line(columnCount, hints))
+    protected [gridshading] val columns = columnHints.map(hints => Line(rowCount, hints))
 }
 
 class InvalidGridException( msg : String ) extends Exception(msg)

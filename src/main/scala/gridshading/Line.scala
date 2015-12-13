@@ -14,8 +14,7 @@ class Line protected [gridshading] (
     protected [gridshading] val shaded : Seq[Int]
 )
 {
-    protected val toBeShaded = length - locations.sum
-    protected val toBeBlank = length - toBeShaded
+    if (length < 1) throw new InvalidLineException("Line must have positive length")
 
     protected [gridshading] def shadedGroups() : Seq[Int] =
     {
@@ -34,4 +33,19 @@ class Line protected [gridshading] (
     {
         shadedGroups == hints
     }
+
+    def shade(index : Int) : Line =
+    {
+        if (!shaded.contains(index)) new Line(length, hints, shaded :+ index) else this
+    }
+
+    override def hashCode : Int = length.hashCode + hints.hashCode() + shaded.hashCode()
+
+    override def equals(any : Any) : Boolean = any match
+    {
+        case other : Line => length == other.length && hints == other.hints && shaded == other.shaded
+        case _ => false
+    }
 }
+
+class InvalidLineException(msg : String) extends Exception

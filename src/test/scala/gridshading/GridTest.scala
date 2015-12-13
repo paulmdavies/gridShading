@@ -14,10 +14,10 @@ class GridTest extends FeatureSpec with GivenWhenThen
             val grid = Grid(Seq(Seq(1), Seq(1), Seq(2)), Seq(Seq(1, 1), Seq(2)))
 
             Then("The grid should have 3 columns")
-            assert(grid.columns == 3)
+            assert(grid.columnCount == 3)
 
             And("The grid should have two rows")
-            assert(grid.rows == 2)
+            assert(grid.rowCount == 2)
         }
 
         scenario("A Grid with no columns shouldn't be allowed")
