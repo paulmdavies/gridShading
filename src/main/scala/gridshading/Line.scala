@@ -2,15 +2,15 @@ package gridshading
 
 object Line 
 {
-    def apply( length : Int, locations : Seq[Int] ) : Line = 
+    def apply( length : Int, hints : Seq[Int] ) : Line =
     {
-        new Line( length, locations, Seq() )
+        new Line( length, hints, Seq() )
     }
 }
 
 class Line protected [gridshading] (
     protected [gridshading] val length : Int,
-    protected [gridshading] val locations : Seq[Int],
+    protected [gridshading] val hints : Seq[Int],
     protected [gridshading] val shaded : Seq[Int]
 )
 {
@@ -32,6 +32,6 @@ class Line protected [gridshading] (
 
     def complete() : Boolean =
     {
-        shadedGroups == locations
+        shadedGroups == hints
     }
 }
