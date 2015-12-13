@@ -14,10 +14,10 @@ class Grid protected [gridshading] (
     protected [gridshading] val rowHints : Seq[Seq[Int]]
 )
 {
-    protected [gridshading] val columns = columnHints.length
-    protected [gridshading] val rows = rowHints.length
+    protected [gridshading] val columnCount = columnHints.length
+    protected [gridshading] val rowCount = rowHints.length
 
-    if ( rows == 0 || columns == 0 ) throw new InvalidGridException("Invalid grid: must have at least one row and column")
+    if ( rowCount == 0 || columnCount == 0 ) throw new InvalidGridException("Invalid grid: must have at least one row and column")
 }
 
 class InvalidGridException( msg : String ) extends Exception(msg)
