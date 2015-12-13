@@ -12,20 +12,23 @@ class Line protected [gridshading] ( val length : Int, val locations : Seq[Int],
 {
     protected val toBeShaded = length - locations.sum
     protected val toBeBlank = length - toBeShaded
-    
-    def validate() : Boolean =
+
+    protected [gridshading] def shadedGroups() : Seq[Int] =
     {
-        val groups = shaded.foldLeft(Seq[Int](), None : Option[Int]){case ((groups, previous), v) => {
-            previous match {
+        shaded.foldLeft(Seq[Int](), None : Option[Int]){case ((groups, previousOption), v) => {
+            previousOption match {
                 case None => (Seq(1), Some(v))
-                case Some(prevV) => v - prevV == 1 match {
+                case Some(previous) => v - previous == 1 match {
                     case true => (groups.init :+ groups.last + 1, Some(v))
                     case false => (groups :+ 1, Some(v))
                 }
             }
-        }}
-        
-        groups == locations
+        }}._1
+    }
+
+    def validate() : Boolean =
+    {
+        shadedGroups == locations
     }
     
     def complete() : Boolean =
