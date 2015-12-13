@@ -8,7 +8,11 @@ object Line
     }
 }
 
-class Line protected [gridshading] ( val length : Int, val locations : Seq[Int], val shaded : Seq[Int] )
+class Line protected [gridshading] (
+    protected [gridshading] val length : Int,
+    protected [gridshading] val locations : Seq[Int],
+    protected [gridshading] val shaded : Seq[Int]
+)
 {
     protected val toBeShaded = length - locations.sum
     protected val toBeBlank = length - toBeShaded
@@ -26,13 +30,8 @@ class Line protected [gridshading] ( val length : Int, val locations : Seq[Int],
         }}._1
     }
 
-    def validate() : Boolean =
-    {
-        shadedGroups == locations
-    }
-    
     def complete() : Boolean =
     {
-        shaded.length == locations.sum && validate
+        shadedGroups == locations
     }
 }
